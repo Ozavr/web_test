@@ -1,0 +1,56 @@
+#%RAML 1.0
+title: "Web UI API"
+baseUri: http://web-test:8000/api
+version: v1
+
+
+/tasks:
+    /create:
+        post:
+            description: Create project
+            body:
+                application/json:
+                    example: |
+                        {}
+            responses:
+                200:
+                    description: Success message
+                    body:
+                        application/json:
+                            example: | 
+                                {
+                                    "status": true,
+                                    "task_id": "566"
+                                }
+                500:
+                    description: Unsuccess message
+                    body:
+                        application/json:
+                            example: |
+                                {
+                                    "status": false,
+                                    "exception": "Validation error"
+                                }
+    /get_status/{task_id}:
+        get:
+            responses:
+                200:
+                    description: Get status task
+                    body:
+                        application/json:
+                            example: |
+                                {
+                                    "status": "Completed",
+                                    "create_time": "2019-01-16 15:49:16.181000",
+                                    "start_time": "2019-01-16 15:49:17.181000",
+                                    "time_to_execute": "2019-01-16 15:49:18.181000"
+                                }
+        500:
+          description: Get error
+          body:
+            application/json:
+              example: |
+                {
+                    "status": "Error",
+                    "error": "Service broke down"
+                }
