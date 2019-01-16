@@ -7,7 +7,7 @@ version: v1
 /tasks:
     /create:
         post:
-            description: Create project
+            description: Create task
             body:
                 application/json:
                     example: |
@@ -40,6 +40,7 @@ version: v1
                         application/json:
                             example: |
                                 {
+                                    "id": 17,
                                     "status": "Completed",
                                     "create_time": "2019-01-16 15:49:16.181000",
                                     "start_time": "2019-01-16 15:49:17.181000",
