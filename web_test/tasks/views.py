@@ -1,12 +1,18 @@
+import random
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+import django_rq
 from tasks.serializers import TaskCreateSerializer, TaskGetSerializer
 from tasks.models import Task
+from tasks.tests import execute_task
 
 
 class TaskCreateApi(APIView):
-    serializer = TaskCreateSerializer
+    def __init__(self, **options):
+        super(TaskCreateApi, self).__init__(**options)
+        self.serializer = TaskCreateSerializer
+        self.queue = django_rq.get_queue('tasks_queue', is_async=True)
 
     def post(self, request, format=None):
         serializer = self.serializer(data=request.data)
@@ -25,6 +31,7 @@ class TaskCreateApi(APIView):
 
     def save_task(self, serializer):
         serializer.save()
+        self.queue.enqueue(execute_task, serializer.data['id'])
         response_data = serializer.get_success_response()
         response =  Response(response_data, status=status.HTTP_201_CREATED)
         return response
