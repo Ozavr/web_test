@@ -2,3 +2,4 @@
 data
 redis_data
 env
+docker-compose.yml
