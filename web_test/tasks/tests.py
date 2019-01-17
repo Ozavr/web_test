@@ -6,7 +6,7 @@ from django.utils import timezone
 from tasks.models import Task
 
 
-@job('tasks_queue')
+@job
 def execute_task(task_id):
     update_status_task(task_id, status='Run')
     time.sleep(random.randint(0,10))

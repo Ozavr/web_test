@@ -130,7 +130,12 @@ STATIC_URL = '/static/'
 
 # queues settings
 RQ_QUEUES = {
-    'tasks_queue': {
+    'tasks_queue_1': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 0,
+    },
+    'tasks_queue_2': {
         'HOST': 'localhost',
         'PORT': 6379,
         'DB': 0,
